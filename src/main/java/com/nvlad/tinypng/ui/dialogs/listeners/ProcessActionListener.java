@@ -105,6 +105,21 @@ public class ProcessActionListener extends ActionListenerBase {
                         float compress = (((float) totalSavedBytes) * 100 / ((float) totalBytes));
                         String saved = StringFormatUtil.humanReadableByteCount(totalSavedBytes);
                         dialog.getTotalDetails().setText(String.format("Total compress: %.1f%% / Saved: %s", compress, saved));
+
+                        // 更新当前选中图片的压缩后预览
+                        FileTreeNode selectedNode = (FileTreeNode) dialog.getTree().getLastSelectedPathComponent();
+                        if (selectedNode != null && selectedNode.getImageBuffer() != null) {
+                            try {
+                                // 更新压缩后的图片预览
+                                dialog.getImageAfter().setImage(selectedNode.getImageBuffer());
+                                
+                                // 更新压缩后的大小信息
+                                String newSize = StringFormatUtil.humanReadableByteCount(selectedNode.getImageBuffer().length);
+                                dialog.getDetailsAfter().setText("New Size: " + newSize);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
                     }
                 });
 
