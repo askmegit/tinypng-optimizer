@@ -143,6 +143,10 @@ public class ProcessImageDialog extends JDialog {
 
         titleBefore.setForeground(JBColor.green.darker());
         titleAfter.setForeground(JBColor.red.darker());
+        
+        if (scrollPanel != null) {
+            UIUtil.removeScrollBorder(scrollPanel);
+        }
     }
 
     @Override
@@ -208,7 +212,6 @@ public class ProcessImageDialog extends JDialog {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        UIUtil.removeScrollBorder(scrollPanel);
         imageBefore = new JImage();
         imageAfter = new JImage();
         fileTree = new CheckboxTree(new FileCellRenderer(myProject), buildTree());
